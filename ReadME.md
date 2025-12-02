@@ -19,17 +19,7 @@ apt install -y \
     pssh \
     ssh
 ```
-### For macOS
-```bash
-brew install \
-    cmake \
-    python@3.11 \
-    curl \
-    pssh \
-    openssh
 
-xcode-select --install
-```
 Each party or worker participating in the FedTopK system should be configured as an instance, and the dependencies are required on all parties and workers.
 
 Additionally, ensure that all required ports-**2000, 3000, and 3999** (default)—are open and accessible between each instance, allowing for proper communication across the network.
