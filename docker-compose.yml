@@ -1,0 +1,372 @@
+version: '3.8'
+
+services:
+  fedtopk-moderator:
+    build: .
+    container_name: fedtopk-moderator
+    working_dir: /workspace
+    command: bash docker_run_ec2.sh
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=moderator
+      - NODE_ID=0
+      - CONTAINER_NAME=fedtopk-moderator
+      - NUM_PARTIES=3
+      - NUM_WORKERS=8
+    networks:
+      - fedtopk-network
+    ports:
+      - "2000:2000"
+      - "2001:2001"
+      - "2002:2002"
+      - "2100:3000"
+      - "2101:3001"
+      - "2102:3002"
+      - "2103:3003"
+      - "2104:3004"
+      - "2105:3005"
+      - "2106:3006"
+      - "2107:3007"
+      - "2200:3999"
+    privileged: true
+    healthcheck:
+      test: ["CMD", "netstat", "-tuln", "|", "grep", ":3999"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  fedtopk-worker-1:
+    build: .
+    container_name: fedtopk-worker-1
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/worker.py raisin l1 equal 16 3 8 vertical secure 3 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=worker
+      - NODE_ID=1
+      - CONTAINER_NAME=fedtopk-worker-1
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "10000:2000"
+      - "10001:2001"
+      - "10002:2002"
+      - "10100:3000"
+      - "10101:3001"
+      - "10102:3002"
+      - "10103:3003"
+      - "10104:3004"
+      - "10105:3005"
+      - "10106:3006"
+      - "10107:3007"
+      - "10200:3999"
+
+  fedtopk-worker-2:
+    build: .
+    container_name: fedtopk-worker-2
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/worker.py raisin l1 equal 16 3 8 vertical secure 4 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=worker
+      - NODE_ID=2
+      - CONTAINER_NAME=fedtopk-worker-2
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "11000:2000"
+      - "11001:2001"
+      - "11002:2002"
+      - "11100:3000"
+      - "11101:3001"
+      - "11102:3002"
+      - "11103:3003"
+      - "11104:3004"
+      - "11105:3005"
+      - "11106:3006"
+      - "11107:3007"
+      - "11200:3999"
+
+  fedtopk-worker-3:
+    build: .
+    container_name: fedtopk-worker-3
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/worker.py raisin l1 equal 16 3 8 vertical secure 5 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=worker
+      - NODE_ID=3
+      - CONTAINER_NAME=fedtopk-worker-3
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "12000:2000"
+      - "12001:2001"
+      - "12002:2002"
+      - "12100:3000"
+      - "12101:3001"
+      - "12102:3002"
+      - "12103:3003"
+      - "12104:3004"
+      - "12105:3005"
+      - "12106:3006"
+      - "12107:3007"
+      - "12200:3999"
+
+  fedtopk-worker-4:
+    build: .
+    container_name: fedtopk-worker-4
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/worker.py raisin l1 equal 16 3 8 vertical secure 6 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=worker
+      - NODE_ID=4
+      - CONTAINER_NAME=fedtopk-worker-4
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "13000:2000"
+      - "13001:2001"
+      - "13002:2002"
+      - "13100:3000"
+      - "13101:3001"
+      - "13102:3002"
+      - "13103:3003"
+      - "13104:3004"
+      - "13105:3005"
+      - "13106:3006"
+      - "13107:3007"
+      - "13200:3999"
+
+  fedtopk-worker-5:
+    build: .
+    container_name: fedtopk-worker-5
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/worker.py raisin l1 equal 16 3 8 vertical secure 7 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=worker
+      - NODE_ID=5
+      - CONTAINER_NAME=fedtopk-worker-5
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "14000:2000"
+      - "14001:2001"
+      - "14002:2002"
+      - "14100:3000"
+      - "14101:3001"
+      - "14102:3002"
+      - "14103:3003"
+      - "14104:3004"
+      - "14105:3005"
+      - "14106:3006"
+      - "14107:3007"
+      - "14200:3999"
+
+  fedtopk-worker-6:
+    build: .
+    container_name: fedtopk-worker-6
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/worker.py raisin l1 equal 16 3 8 vertical secure 8 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=worker
+      - NODE_ID=6
+      - CONTAINER_NAME=fedtopk-worker-6
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "15000:2000"
+      - "15001:2001"
+      - "15002:2002"
+      - "15100:3000"
+      - "15101:3001"
+      - "15102:3002"
+      - "15103:3003"
+      - "15104:3004"
+      - "15105:3005"
+      - "15106:3006"
+      - "15107:3007"
+      - "15200:3999"
+
+  fedtopk-worker-7:
+    build: .
+    container_name: fedtopk-worker-7
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/worker.py raisin l1 equal 16 3 8 vertical secure 9 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=worker
+      - NODE_ID=7
+      - CONTAINER_NAME=fedtopk-worker-7
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "16000:2000"
+      - "16001:2001"
+      - "16002:2002"
+      - "16100:3000"
+      - "16101:3001"
+      - "16102:3002"
+      - "16103:3003"
+      - "16104:3004"
+      - "16105:3005"
+      - "16106:3006"
+      - "16107:3007"
+      - "16200:3999"
+
+  fedtopk-worker-8:
+    build: .
+    container_name: fedtopk-worker-8
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/worker.py raisin l1 equal 16 3 8 vertical secure 10 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=worker
+      - NODE_ID=8
+      - CONTAINER_NAME=fedtopk-worker-8
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "17000:2000"
+      - "17001:2001"
+      - "17002:2002"
+      - "17100:3000"
+      - "17101:3001"
+      - "17102:3002"
+      - "17103:3003"
+      - "17104:3004"
+      - "17105:3005"
+      - "17106:3006"
+      - "17107:3007"
+      - "17200:3999"
+
+  fedtopk-party-1:
+    build: .
+    container_name: fedtopk-party-1
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/party.py raisin l1 equal 16 3 8 vertical secure 0 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=party
+      - NODE_ID=1
+      - CONTAINER_NAME=fedtopk-party-1
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "20000:2000"
+      - "20001:2001"
+      - "20002:2002"
+      - "20100:3000"
+      - "20101:3001"
+      - "20102:3002"
+      - "20103:3003"
+      - "20104:3004"
+      - "20105:3005"
+      - "20106:3006"
+      - "20107:3007"
+      - "20200:3999"
+
+  fedtopk-party-2:
+    build: .
+    container_name: fedtopk-party-2
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/party.py raisin l1 equal 16 3 8 vertical secure 1 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=party
+      - NODE_ID=2
+      - CONTAINER_NAME=fedtopk-party-2
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "21000:2000"
+      - "21001:2001"
+      - "21002:2002"
+      - "21100:3000"
+      - "21101:3001"
+      - "21102:3002"
+      - "21103:3003"
+      - "21104:3004"
+      - "21105:3005"
+      - "21106:3006"
+      - "21107:3007"
+      - "21200:3999"
+
+  fedtopk-party-3:
+    build: .
+    container_name: fedtopk-party-3
+    working_dir: /workspace
+    command: bash -c "sleep 30 && source /workspace/Kenv/bin/activate && /workspace/Kenv/bin/python3.11 src/party.py raisin l1 equal 16 3 8 vertical secure 2 fedtopk-worker-1,fedtopk-worker-2,fedtopk-worker-3,fedtopk-worker-4,fedtopk-worker-5,fedtopk-worker-6,fedtopk-worker-7,fedtopk-worker-8,fedtopk-party-1,fedtopk-party-2,fedtopk-party-3,fedtopk-moderator"
+    environment:
+      - PYTHONPATH=/workspace/src
+      - LD_LIBRARY_PATH=/usr/local/lib
+      - ROLE=party
+      - NODE_ID=3
+      - CONTAINER_NAME=fedtopk-party-3
+    networks:
+      - fedtopk-network
+    depends_on:
+      fedtopk-moderator:
+        condition: service_healthy
+    ports:
+      - "22000:2000"
+      - "22001:2001"
+      - "22002:2002"
+      - "22100:3000"
+      - "22101:3001"
+      - "22102:3002"
+      - "22103:3003"
+      - "22104:3004"
+      - "22105:3005"
+      - "22106:3006"
+      - "22107:3007"
+      - "22200:3999"
+
+networks:
+  fedtopk-network:
+    driver: bridge
