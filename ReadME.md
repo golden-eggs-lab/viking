@@ -2,7 +2,7 @@
 
 Source code for FedTopK, which is a system for answering top-k join queries securely and efficiently over a vertical data federation. It consists of a set of novel cryptographic constructs that are specialized for the operators in distributed top-k query answering under a uniform framework, and guarantees end-to-end semantic security against semi-honest adversaries.
 
-The submission to EDBT '27 is currently under review, the PDF copy of our paper will be released later.
+The submission to SIGMOD'27 is currently under review, the PDF copy of our paper will be released later.
 
 ## Dependencies
 FedTopK has been tested on Python version 3.11. Installing FedTopK requires Python 3.11 or a later version.
@@ -80,8 +80,6 @@ Similar to the example query configuration, you can adjust any parameters in `$r
 ```bash
 ./runtime/run_ec2.sh
 ```
-### Running Benchmark with Existing MPC Frameworks
-More details are in [README.md](baseline/README.md)
 
 ## Acknowledgement and License
 FedTopK is built on the top of [SEAL](https://github.com/microsoft/SEAL) and [SealPIR](https://github.com/microsoft/SealPIR), and the baseline experiments conver multiple existing SOTA multiple party computation framework, the details are in `baseline/README.md` references section.
@@ -89,5 +87,5 @@ FedTopK is built on the top of [SEAL](https://github.com/microsoft/SEAL) and [Se
 [MIT LICENSE](LICENSE)
 
 ## Question / Help / Bug
-If you encounter any problems while using FedTopK and need our help, please [click](https://github.com/golden-eggs-lab/fedtopk/issues/new/choose) to report the problem.
+If you encounter any problems while using FedTopK and need our help, please [click](***) to report the problem.
 
